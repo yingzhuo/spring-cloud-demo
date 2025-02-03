@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowed-origin-patterns: "*"
+            allowed-headers: "*"
+            allowed-methods: "*"
+      routes:
+        - id: consumer
+          uri: "lb://service-consumer"
+          predicates:
+            - Path=/consumer/**
+          filters:
+            - RewritePath=/consumer/(?<segment>.*), /$\{segment}

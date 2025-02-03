@@ -1,0 +1,9 @@
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      table-prefix: "t_"
+  mapperLocations:
+    - "classpath*:/mybatis/**/*Mapper.xml"
+    - "classpath*:/mybatis-mapper/**/*Mapper.xml"
+  type-aliases-package: com.github.yingzhuo.playground.entity,com.github.yingzhuo.playground.dto

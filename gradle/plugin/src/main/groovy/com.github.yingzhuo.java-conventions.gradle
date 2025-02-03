@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'idea'
+    id 'io.spring.dependency-management'
+}
+
+repositories {
+    mavenLocal()
+    maven { name = '阿里云'; url = 'https://maven.aliyun.com/repository/public/' }
+    maven { name = '阿里云(Spring)'; url = 'https://maven.aliyun.com/repository/spring/' }
+    maven { name = 'Spring(GA)'; url = 'https://repo.spring.io/release' }
+    maven { name = 'Spring(Milestone)'; url = 'https://repo.spring.io/milestone' }
+    maven { name = 'Spring(Snapshot)'; url = 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+    google()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+jar {
+    archiveFileName = "SCD-${project.name}-${rootProject.version}.jar"
+}
+
+processResources {
+    from('src/main/java') {
+        include([
+                '**/*.properties',
+                '**/*.yml',
+                '**/*.yaml',
+                '**/*.toml',
+                '**/*.conf',
+                '**/*.xml',
+                '**/*.json',
+                '**/*.pem',
+                '**/*.p12',
+                '**/*.pfx',
+        ])
+        exclude '**/*.java'
+        exclude '**/*.kt'
+        exclude '**/*.scala'
+        exclude '**/*.groovy'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+configurations.configureEach { config ->
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+}

@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+tasks.named('clean') { task ->
+    delete += [
+            'build',
+            'gradle/plugin/build',
+    ]
+
+    delete fileTree(rootDir) {
+        include '**/.DS_Store'
+        include '**/*backup'
+    }
+}

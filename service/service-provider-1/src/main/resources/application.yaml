@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: "service-provider-1"
+  profiles:
+    active: dev
+    include:
+      - "feign"
+      - "datasource"
+      - "mybatis"
+  main:
+    banner-mode: off
+  config:
+    import:
+      - "optional:nacos:${spring.application.name}.yaml?group=${spring.application.name}"
+  cloud:
+    nacos:
+      server-addr: "192.168.31.167:8848"
+      discovery:
+        namespace: "SCD"
+        group: "DEFAULT_GROUP"
+      config:
+        namespace: "SCD"
+        import-check:
+          enabled: false
+    sentinel:
+      enabled: true
+      eager: true
+      transport:
+        dashboard: "192.168.31.167:28080"
+
+server:
+  port: 9001

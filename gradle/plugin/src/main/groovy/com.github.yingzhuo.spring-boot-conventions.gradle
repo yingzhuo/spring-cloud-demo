@@ -1,0 +1,96 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'com.gorylenko.gradle-git-properties'
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+tasks.named('bootJar') { task ->
+    archiveFileName = "SCD-${project.name}-${rootProject.version}.jar"
+
+    manifest {
+        attributes([
+                'Main-Class'            : 'org.springframework.boot.loader.launch.PropertiesLauncher',
+                'Implementation-Version': "${rootProject.version}",
+                'Implementation-Title'  : "${project.name}",
+        ])
+    }
+
+    includeTools = false
+
+    layered {
+        enabled = true
+
+        application {
+            intoLayer('spring-boot-loader') {
+                include 'org/springframework/boot/loader/**'
+            }
+            intoLayer('application')
+        }
+
+        dependencies {
+            intoLayer('application') {
+                includeProjectDependencies()
+            }
+
+            intoLayer('snapshot-dependencies') {
+                include '*:*:*SNAPSHOT'
+            }
+
+            intoLayer('dependencies')
+        }
+
+        layerOrder = ['dependencies',
+                      'spring-boot-loader',
+                      'snapshot-dependencies',
+                      'application',
+        ]
+    }
+
+    excludes = [
+            '**/.gitkeep',
+            '**/.DS_Store',
+            '**/netty-*-macos*.jar',
+            '**/netty-*-osx*.jar',
+    ]
+}
+
+tasks.named('generateGitProperties') { task ->
+    gitProperties {
+        keys = ['git.branch', 'git.commit.id', 'git.commit.id.abbrev', 'git.commit.time', 'git.dirty']
+        dateFormat = 'yyyy-MM-dd HH:mm:ss.SSS'
+        dateFormatTimeZone = 'Asia/Shanghai'
+        failOnNoGitDirectory = false
+        gitPropertiesName = 'git.properties'
+    }
+}
+
+tasks.named('bootBuildImage') {
+    environment['BP_JVM_TYPE'] = 'JRE'
+    environment['BP_JVM_VERSION'] = '21'
+    environment['BPL_JMX_ENABLED'] = 'false'
+    environment['BPL_DEBUG_ENABLED'] = 'false'
+
+    builder.set('paketobuildpacks/builder-jammy-java-tiny:latest')
+    imageName.set("yingzhuo/scd-${project.name}:${rootProject.version}")
+    tags.set([
+            "yingzhuo/scd-${project.name}:latest"
+    ])
+    pullPolicy = 'IF_NOT_PRESENT'
+    publish.set(false)
+}
+
+tasks.register('copyJar', Copy) { copy ->
+    group = 'build'
+    description = 'copy jar'
+
+    from 'build/libs'
+    into "${rootProject.rootDir}/build"
+    include "*-${rootProject.version}.jar"
+}
+
+tasks.named('build') { task ->
+    finalizedBy('copyJar')
+}

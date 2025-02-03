@@ -1,0 +1,60 @@
+plugins {
+    id 'com.github.yingzhuo.java-conventions'
+    id 'com.github.yingzhuo.spring-boot-conventions'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+    }
+}
+
+dependencies {
+
+    // 其他子项目
+    api project(':shared:common-concept')
+    api project(':shared:common-feigncli')
+    api project(':shared:spring-boot-starter-misc')
+
+    // spring-boot and spring
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    compileOnly 'org.springframework:spring-context-indexer'
+    annotationProcessor 'org.springframework:spring-context-indexer'
+
+    // spring-cloud
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    implementation 'com.alibaba.cloud:spring-cloud-alibaba-sentinel-datasource'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'com.alibaba.csp:sentinel-datasource-nacos'
+    // implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
+
+    // mybatis
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.10.1'
+    implementation 'org.mybatis:mybatis:3.5.19'
+    implementation 'org.mybatis:mybatis-spring:3.0.4'
+
+    // mysql驱动
+    implementation('com.mysql:mysql-connector-j:9.1.0') {
+        exclude group: 'com.google.protobuf', module: 'protobuf-java'
+    }
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // slf4j
+    implementation 'org.slf4j:slf4j-api'
+}
+
+ext {
+    set('appMainClass', 'com.github.yingzhuo.scd.provider1.ApplicationBoot')
+}

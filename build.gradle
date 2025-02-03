@@ -1,0 +1,21 @@
+plugins {
+    id 'com.github.yingzhuo.misc-convention' apply true
+}
+
+ext {
+    // 主框架版本
+    set('springBootVersion', "3.4.2")
+    set('springCloudVersion', "2024.0.0")
+    set('springCloudAlibabaVersion', '2023.0.3.2')
+
+    // 微调 SpringBoot依赖中的版本号
+    // 参考: https://docs.spring.io/spring-boot/appendix/dependency-versions/properties.html
+    // set('logback.version', '1.5.16')
+
+    // 项目配置
+    // set('foo', 'bar')
+}
+
+group = 'com.github.yingzhuo'
+version = '0.2.0'
+description = 'Demo of SpringBoot / SpringCloud Application'

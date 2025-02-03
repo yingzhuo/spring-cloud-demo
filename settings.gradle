@@ -1,0 +1,38 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = '阿里云'; url = 'https://maven.aliyun.com/repository/gradle-plugin'; allowInsecureProtocol = true
+        }
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'io.spring.dependency-management' version '1.1.7' apply false
+    id 'org.springframework.boot' version '3.4.2' apply false
+    id 'com.gorylenko.gradle-git-properties' version '2.4.2' apply false
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { name = '阿里云'; url = 'https://maven.aliyun.com/repository/public/' }
+        maven { name = '阿里云(Spring)'; url = 'https://maven.aliyun.com/repository/spring/' }
+        maven { name = 'Spring(GA)'; url = 'https://repo.spring.io/release' }
+        maven { name = 'Spring(Milestone)'; url = 'https://repo.spring.io/milestone' }
+        maven { name = 'Spring(Snapshot)'; url = 'https://repo.spring.io/snapshot' }
+        google()
+    }
+}
+
+rootProject.name = 'spring-cloud-demo'
+includeBuild 'gradle/plugin'
+
+include 'shared:common-concept'
+include 'shared:common-feigncli'
+include 'shared:spring-boot-starter-misc'
+include 'service:service-consumer'
+include 'service:service-provider-1'
+include 'service:service-provider-2'
+include 'architecture:gateway'

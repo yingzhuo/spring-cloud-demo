@@ -1,0 +1,28 @@
+plugins {
+    id 'com.github.yingzhuo.java-conventions'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+    }
+}
+
+dependencies {
+
+    // spring-boot
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+
+    // mybatis
+    compileOnly 'com.baomidou:mybatis-plus-boot-starter:3.5.10.1'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // slf4j
+    implementation 'org.slf4j:slf4j-api'
+}
