@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-    // 主框架版本
+    // 核心框架版本号
     set('springBootVersion', "3.4.2")
     set('springCloudVersion', "2024.0.0")
     set('springCloudAlibabaVersion', '2023.0.3.2')
@@ -14,6 +14,26 @@ ext {
 
     // 项目配置
     // set('foo', 'bar')
+}
+
+test {
+    enabled = false
+}
+
+classes {
+    enabled = false
+}
+
+jar {
+    enabled = false
+}
+
+build {
+    enabled = false
+}
+
+processResources {
+    enabled = false
 }
 
 group = 'com.github.yingzhuo'

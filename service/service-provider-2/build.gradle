@@ -3,14 +3,6 @@ plugins {
     id 'com.github.yingzhuo.spring-boot-conventions'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
-    }
-}
-
 dependencies {
 
     // 其他子项目
@@ -53,8 +45,4 @@ dependencies {
 
     // slf4j
     implementation 'org.slf4j:slf4j-api'
-}
-
-ext {
-    set('appMainClass', 'com.github.yingzhuo.scd.provider2.ApplicationBoot')
 }

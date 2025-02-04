@@ -5,15 +5,12 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
-repositories {
-    mavenLocal()
-    maven { name = '阿里云'; url = 'https://maven.aliyun.com/repository/public/' }
-    maven { name = '阿里云(Spring)'; url = 'https://maven.aliyun.com/repository/spring/' }
-    maven { name = 'Spring(GA)'; url = 'https://repo.spring.io/release' }
-    maven { name = 'Spring(Milestone)'; url = 'https://repo.spring.io/milestone' }
-    maven { name = 'Spring(Snapshot)'; url = 'https://repo.spring.io/snapshot' }
-    mavenCentral()
-    google()
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+    }
 }
 
 java {
