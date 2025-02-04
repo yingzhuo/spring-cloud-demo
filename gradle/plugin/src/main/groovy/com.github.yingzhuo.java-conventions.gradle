@@ -40,10 +40,6 @@ processResources {
                 '**/*.p12',
                 '**/*.pfx',
         ])
-        exclude '**/*.java'
-        exclude '**/*.kt'
-        exclude '**/*.scala'
-        exclude '**/*.groovy'
     }
 }
 
